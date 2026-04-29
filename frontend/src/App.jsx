@@ -3,8 +3,7 @@ import Lenis from "lenis";
 import { CustomCursor } from "./components/CustomCursor";
 import { Navbar } from "./components/Navbar";
 import { HeroSection } from "./components/HeroSection";
-import { FeaturesSection } from "./components/FeaturesSection";
-import { CardsSection } from "./components/CardsSection";
+import { StudentDashboard } from "./components/StudentDashboard";
 import { Footer } from "./components/Footer";
 
 function App() {
@@ -41,8 +40,7 @@ function App() {
       
       <main>
         <HeroSection />
-        <FeaturesSection />
-        <CardsSection />
+        <StudentDashboard />
       </main>
       
       <Footer />

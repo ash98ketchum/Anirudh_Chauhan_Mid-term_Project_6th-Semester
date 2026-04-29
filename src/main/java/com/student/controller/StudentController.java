@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
@@ -58,6 +59,7 @@ import java.util.List;
  *  11. ResponseEntity wraps the JSON with the appropriate HTTP status code
  *  12. Response sent back to the client
  */
+@CrossOrigin(origins = "*") // Allow requests from React frontend
 @RestController
 @RequestMapping("/students")
 public class StudentController {
