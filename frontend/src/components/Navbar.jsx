@@ -31,7 +31,7 @@ export const Navbar = () => {
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
           {/* Logo */}
           <a href="#" className="text-xl font-bold tracking-tight text-white group">
-            Bending<span className="text-white/50 group-hover:text-white transition-colors duration-300">Spoons</span>
+            Uni<span className="text-white/50 group-hover:text-white transition-colors duration-300">Roster</span>
           </a>
 
           {/* Desktop Nav */}
