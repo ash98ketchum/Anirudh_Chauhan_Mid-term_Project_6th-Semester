@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bs-bg: #050505;
+  --color-bs-text: #ffffff;
+  --color-bs-gray: #888888;
+  --color-bs-gray-dark: #222222;
+  --color-bs-accent: #3b82f6;
+
+  --font-sans: "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  --ease-in-out: cubic-bezier(0.8, 0, 0.1, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+}
+
+/* Custom Utilities */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Base Styles */
+@layer base {
+  :root {
+    background-color: var(--color-bs-bg);
+    color: var(--color-bs-text);
+  }
+
+  body {
+    background-color: var(--color-bs-bg);
+    color: var(--color-bs-text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Hide default scrollbar for sleek look */
+    scrollbar-width: none; 
+    cursor: none; /* We will use a custom cursor */
+  }
+
+  body::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Reset links */
+  a {
+    cursor: none; /* for custom cursor hover states */
+  }
+  
+  button {
+    cursor: none;
+  }
+}

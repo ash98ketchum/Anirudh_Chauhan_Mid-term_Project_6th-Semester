@@ -28,32 +28,44 @@ Client (Postman/curl) → Controller → Service → Repository → PostgreSQL
 ### Prerequisites
 - **JDK 8+** — download from [Adoptium](https://adoptium.net/) (free)
 - **PostgreSQL** — download from [postgresql.org](https://www.postgresql.org/download/)
+- **Node.js** (v18+) — for the frontend
 
-### 1. Create the Database
+### 1. Database Setup
 Open **psql** or **pgAdmin** and run:
 ```sql
 CREATE DATABASE student_db;
 ```
 > The `students` table is created **automatically** by `schema.sql` on app startup.
 
-### 2. Configure Database Credentials
-Edit `src/main/resources/application.properties`:
+Edit `src/main/resources/application.properties` with your PostgreSQL password:
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/student_db
 spring.datasource.username=postgres
 spring.datasource.password=YOUR_PASSWORD_HERE
 ```
 
-### 3. Run the Application
+### 2. Run the Backend (Spring Boot)
 ```bash
-# Set JAVA_HOME if not already set
-set JAVA_HOME=C:\path\to\your\jdk
+# Open a terminal in the root directory
+# Set JAVA_HOME if not already set (e.g., set JAVA_HOME=C:\path\to\your\jdk)
 
 # Run using Maven wrapper (no Maven install required)
 .\mvnw.cmd spring-boot:run
 ```
+The API starts on **http://localhost:8080**.
 
-The app starts on **http://localhost:8080**.
+### 3. Run the Frontend (React + Vite)
+```bash
+# Open a new terminal
+cd frontend
+
+# Install dependencies (only needed once)
+npm install
+
+# Start the dev server
+npm run dev
+```
+The premium UI starts on **http://localhost:5173**.
 
 ---
 
