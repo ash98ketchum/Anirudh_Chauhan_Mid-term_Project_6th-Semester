@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         PARENT: Spring Boot Starter Parent
+         ─────────────────────────────────────────────────────────────────
+         This is the "master recipe book" for our project. It pre-configures:
+           • Default dependency versions (so we don't have version conflicts)
+           • Plugin configurations (maven-compiler, spring-boot-maven-plugin)
+           • Java version, encoding, resource filtering
+         Think of it as inheriting sensible defaults so we write less XML.
+         ═══════════════════════════════════════════════════════════════════ -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.18</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         PROJECT COORDINATES
+         ─────────────────────────────────────────────────────────────────
+         groupId    → Reverse domain name of your organization (like a namespace)
+         artifactId → The name of THIS specific project/module
+         version    → Semantic versioning: MAJOR.MINOR.PATCH
+         ═══════════════════════════════════════════════════════════════════ -->
+    <groupId>com.student</groupId>
+    <artifactId>student-crud-jdbc</artifactId>
+    <version>1.0.0</version>
+    <name>Student CRUD JDBC</name>
+    <description>Production-grade Spring Boot CRUD application using JDBC (no Hibernate/JPA)</description>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         PROPERTIES
+         ─────────────────────────────────────────────────────────────────
+         java.version → Tells the compiler which Java version to target.
+         Java 17 is the LTS (Long-Term Support) version used widely in
+         enterprise applications.
+         ═══════════════════════════════════════════════════════════════════ -->
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         DEPENDENCIES — The "ingredients" our application needs
+         ═══════════════════════════════════════════════════════════════════ -->
+    <dependencies>
+
+        <!-- ──────────────────────────────────────────────────────────────
+             1. SPRING BOOT STARTER WEB
+             ──────────────────────────────────────────────────────────────
+             What:  Brings in everything needed to build RESTful web services:
+                    • Embedded Tomcat server (no external server needed)
+                    • Spring MVC framework (controllers, request mapping)
+                    • Jackson (automatic JSON ↔ Java object conversion)
+             Why:   We need to expose REST API endpoints (POST, GET, PUT, DELETE)
+             Analogy: This is like opening a restaurant — it gives you the
+                      kitchen (Tomcat), the menu system (MVC), and the
+                      waiter who translates orders (Jackson).
+             ────────────────────────────────────────────────────────────── -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- ──────────────────────────────────────────────────────────────
+             2. SPRING BOOT STARTER JDBC
+             ──────────────────────────────────────────────────────────────
+             What:  Provides JdbcTemplate and connection management:
+                    • JdbcTemplate (simplified JDBC operations)
+                    • DataSource auto-configuration
+                    • HikariCP connection pool (fastest Java connection pool)
+                    • Transaction management
+             Why:   We are using JDBC directly (NOT JPA/Hibernate).
+                    JdbcTemplate wraps raw JDBC, handling boilerplate like
+                    opening/closing connections, creating statements, and
+                    mapping results.
+             Analogy: If raw JDBC is driving a manual car, JdbcTemplate
+                      is an automatic car — same engine, less effort.
+             ────────────────────────────────────────────────────────────── -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
+        <!-- ──────────────────────────────────────────────────────────────
+             3. SPRING BOOT STARTER VALIDATION
+             ──────────────────────────────────────────────────────────────
+             What:  Brings in Jakarta Bean Validation (Hibernate Validator
+                    as the implementation — but this is NOT Hibernate ORM).
+             Why:   Allows us to use annotations like @NotBlank, @Email,
+                    @Size on our model fields and @Valid on controller
+                    parameters for automatic input validation.
+             Analogy: This is like a bouncer at a club — it checks IDs
+                      (validates input) before anyone gets inside.
+             ────────────────────────────────────────────────────────────── -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- ──────────────────────────────────────────────────────────────
+             4. POSTGRESQL DRIVER
+             ──────────────────────────────────────────────────────────────
+             What:  The JDBC driver that knows how to "speak PostgreSQL".
+                    It translates Java JDBC calls into PostgreSQL's wire
+                    protocol.
+             Why:   Without this, Java has no idea how to connect to a
+                    PostgreSQL database.
+             Scope: 'runtime' — We only need it when the app RUNS, not
+                    when we COMPILE. Our code talks to standard JDBC
+                    interfaces; the driver is loaded dynamically at runtime.
+             Analogy: This is like a language translator — your app speaks
+                      Java, the database speaks PostgreSQL, and this driver
+                      translates between them.
+             ────────────────────────────────────────────────────────────── -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- ──────────────────────────────────────────────────────────────
+             5. SPRING BOOT STARTER TEST
+             ──────────────────────────────────────────────────────────────
+             What:  Testing toolkit: JUnit 5, Mockito, AssertJ, Spring
+                    Test utilities.
+             Why:   For writing and running unit/integration tests.
+             Scope: 'test' — Only available during testing, not packaged
+                    into the final JAR.
+             ────────────────────────────────────────────────────────────── -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         BUILD PLUGINS
+         ─────────────────────────────────────────────────────────────────
+         spring-boot-maven-plugin:
+           • Packages the app as an executable JAR with embedded Tomcat
+           • Enables `mvn spring-boot:run` for development
+           • Creates a fat JAR with all dependencies included
+         ═══════════════════════════════════════════════════════════════════ -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
